@@ -40,11 +40,11 @@ namespace AdvansysPOC
                 tr.Start("Flip Conveyors Hand");
                 foreach (var family in genericFamilies)
                 {
-                    bool isLeft = family.isParameterEquals(ParamtersConstants.ConveyorHand, "Left");
+                    bool isLeft = family.isParameterEquals(ParametersConstants.ConveyorHand, "Left");
                     if (isLeft)
-                        family.SetParameter(ParamtersConstants.ConveyorHand, "Right");
+                        family.SetParameter(ParametersConstants.ConveyorHand, "Right");
                     else
-                        family.SetParameter(ParamtersConstants.ConveyorHand, "Left");
+                        family.SetParameter(ParametersConstants.ConveyorHand, "Left");
                 }
                 tr.Commit();
             }

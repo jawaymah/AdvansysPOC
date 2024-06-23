@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using AdvansysPOC.Helpers;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -37,24 +39,77 @@ namespace AdvansysPOC
                 FabricationManagerView FabricationManagerView = new FabricationManagerView();
                 a.RegisterDockablePane(FabricationManagerPaneId, ManagerPanelName, FabricationManagerView);
 
-                return Result.Succeeded;
+                //return Result.Succeeded;
             }
             catch (Exception ex)
             {
                 Autodesk.Revit.UI.TaskDialog.Show("Error", ex.Message);
                 return Result.Failed;
             }
+            
+            a.ControlledApplication.DocumentChanged += ControlledApplication_DocumentChanged;
 
-            a.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
+
+            // Register wall updater with Revit
+            FamilyInstanceUpdater updater = new FamilyInstanceUpdater(a.ActiveAddInId);
+            UpdaterRegistry.RegisterUpdater(updater);
+
+            // Change Scope = any Wall element
+            ElementClassFilter familyInstanceFilter = new ElementClassFilter(typeof(FamilyInstance));
+
+            // Change type = element addition
+            UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), familyInstanceFilter,
+                                        Element.GetChangeTypeElementAddition());
+
+
+            //a.ControlledApplication.DocumentChanged += ControlledApplication_DocumentChanged;
+            //a.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
+            //a.ControlledApplication.DocumentCreated += ControlledApplication_DocumentCreated;
+            //a.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
             a.ViewActivated += A_ViewActivated;
 
             return Result.Succeeded;
         }
 
+        private void ControlledApplication_DocumentChanged(object sender, Autodesk.Revit.DB.Events.DocumentChangedEventArgs e)
+        {
+            //var ids = e.GetAddedElementIds();
+            //foreach (var id in ids)
+            //{
+            //    Element elem = e.GetDocument().GetElement(id);
+            //    if (elem != null && elem is FamilyInstance)
+            //    {
+            //        FamilyInstance familyInstance = (FamilyInstance)elem;
+            //        if (familyInstance.Symbol.FamilyName == "Straight")
+            //        {
+            //            Globals.addedFamilies.Add(familyInstance);
+            //            familyInstance.SetUnitId();
+            //        }
+            //    }
+            //}
+        }
+
+        private void A_ViewActivated(object sender, Autodesk.Revit.UI.Events.ViewActivatedEventArgs e)
+        {
+            if (Globals.Doc != e.Document)
+            {
+                Globals.SetupCurrentDocument(e.Document);
+            }
+        }
 
         private void Elements_SelectionChanged(object sender, Autodesk.Revit.UI.Events.SelectionChangedEventArgs e)
         {
             var selected = e.GetSelectedElements();
+            //foreach (var id in selected)
+            //{
+            //    Element elem = e.GetDocument().GetElement(id);
+            //    if (elem != null && elem is FamilyInstance)
+            //    {
+            //        FamilyInstance familyInstance = (FamilyInstance)elem;
+            //        if (familyInstance.Symbol.FamilyName == "Straight")
+            //            familyInstance.SetUnitId();
+            //    }
+            //}
             var doc = e.GetDocument();
         }
 
@@ -82,18 +137,16 @@ namespace AdvansysPOC
         /// </summary>
         private static UIControlledApplication CurrentApplication { get; set; }
 
-        private void A_ViewActivated(object sender, Autodesk.Revit.UI.Events.ViewActivatedEventArgs e)
-        {
-            Globals.Doc = e.Document;
-        }
 
-        private void ControlledApplication_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
-        {
-            Globals.Doc = e.Document;
-        }
 
         public Result OnShutdown(UIControlledApplication a)
         {
+            a.ViewActivated -= A_ViewActivated;
+            a.ControlledApplication.DocumentChanged -= ControlledApplication_DocumentChanged;
+
+            FamilyInstanceUpdater updater = new FamilyInstanceUpdater(a.ActiveAddInId);
+            UpdaterRegistry.UnregisterUpdater(updater.GetUpdaterId());
+
             return Result.Succeeded;
         }
 

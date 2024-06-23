@@ -72,19 +72,18 @@ namespace AdvansysPOC
                 }
 
                 //Register document changed to get placed families and treat them as a unit
-
-                uiApp.Application.DocumentChanged += Application_DocumentChanged;
-
                 try
                 {
+                    //PromptForFamilyInstancePlacementOptions options = new PromptForFamilyInstancePlacementOptions();
+                    //options.FaceBasedPlacementType = FaceBasedPlacementType.PlaceOnWorkPlane;
                     //uiApp.ActiveUIDocument.PromptForFamilyInstancePlacement(symbol);
 
                     uiApp.ActiveUIDocument.PostRequestForElementTypePlacement(symbol);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException ex)
                 {
+
                 }
-                uiApp.Application.DocumentChanged -= Application_DocumentChanged;
 
                 return Result.Succeeded;
             }

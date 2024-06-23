@@ -1,4 +1,5 @@
-﻿using Autodesk.Revit.DB;
+﻿using AdvansysPOC.Helpers;
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,5 +23,10 @@ namespace AdvansysPOC
         //public static string SaveSpacesEndpoint = $"{APOCAppBaseUrl}api/saveForgeSpaces/";
         //public static string LicenseUrl = $"{APOCAppBaseUrl}api/revitlicense/";
 
+        public static void SetupCurrentDocument(Document doc)
+        {
+            ParametersHelper.SetupProjectIfNeeded(doc);
+            Doc = doc;
+        }
     }
 }
