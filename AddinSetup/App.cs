@@ -54,7 +54,7 @@ namespace AdvansysPOC
 
         private void Elements_SelectionChanged(object sender, Autodesk.Revit.UI.Events.SelectionChangedEventArgs e)
         {
-            var selected  =  e.GetSelectedElements();
+            var selected = e.GetSelectedElements();
             var doc = e.GetDocument();
         }
 
@@ -105,12 +105,20 @@ namespace AdvansysPOC
             {
 
                 PushButtonData buttonDataDimensions = new PushButtonData("Generic", "Generic", Assembly.GetExecutingAssembly().Location, "AdvansysPOC.GenericStraightConveyorCommand");
-//                buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
-//"dimension32.png"), UriKind.Absolute));
-//                buttonDataDimensions.Image = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
-//                    "dimension32.png"), UriKind.Absolute));
+                //                buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
+                //"dimension32.png"), UriKind.Absolute));
+                //                buttonDataDimensions.Image = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
+                //                    "dimension32.png"), UriKind.Absolute));
                 //buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(@"C:\Users\Jemmy\source\repos\AdvansysPOC\AdvansysPOC\Resources", "add32.png"), UriKind.Absolute));
                 Autodesk.Revit.UI.RibbonItem PulldownButtons3 = panel.AddItem(buttonDataDimensions);
+
+                PushButtonData buttonFlip = new PushButtonData("FlipGenericSide", "Flip Generic Hand", Assembly.GetExecutingAssembly().Location, "AdvansysPOC.FlipGenericHandCommand");
+                //                buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
+                //"dimension32.png"), UriKind.Absolute));
+                //                buttonDataDimensions.Image = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
+                //                    "dimension32.png"), UriKind.Absolute));
+                //buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(@"C:\Users\Jemmy\source\repos\AdvansysPOC\AdvansysPOC\Resources", "add32.png"), UriKind.Absolute));
+                Autodesk.Revit.UI.RibbonItem flipButton = panel.AddItem(buttonFlip);
             }
             if (panelName == "Supports")
             {
