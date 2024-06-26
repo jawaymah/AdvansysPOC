@@ -50,17 +50,16 @@ namespace AdvansysPOC
             a.ControlledApplication.DocumentChanged += ControlledApplication_DocumentChanged;
 
 
-            // Register wall updater with Revit
+            // Register familyInstance updater with Revit
             FamilyInstanceUpdater updater = new FamilyInstanceUpdater(a.ActiveAddInId);
             UpdaterRegistry.RegisterUpdater(updater);
 
-            // Change Scope = any Wall element
+            // Change Scope = any familyInstance element
             ElementClassFilter familyInstanceFilter = new ElementClassFilter(typeof(FamilyInstance));
 
             // Change type = element addition
             UpdaterRegistry.AddTrigger(updater.GetUpdaterId(), familyInstanceFilter,
                                         Element.GetChangeTypeElementAddition());
-
 
             //a.ControlledApplication.DocumentChanged += ControlledApplication_DocumentChanged;
             //a.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;

@@ -25,8 +25,8 @@ namespace AdvansysPOC
 
         public static void SetupCurrentDocument(Document doc)
         {
-            ParametersHelper.SetupProjectIfNeeded(doc);
             Doc = doc;
+            ParametersHelper.SetupProjectIfNeeded(doc);
         }
     }
 }

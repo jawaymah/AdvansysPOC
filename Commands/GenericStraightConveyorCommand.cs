@@ -30,7 +30,7 @@ namespace AdvansysPOC
 
                 uiApp.DialogBoxShowing += UiApp_DialogBoxShowing;
 
-                if (symbol == null)
+                if (symbol == null || !symbol.IsValidObject)
                 {
                     Family family = FamilyHelper.FindFamilyByName(doc, basicFamilyName);
                     if (family == null)

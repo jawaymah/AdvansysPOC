@@ -28,8 +28,8 @@ namespace AdvansysPOC.Helpers
         public static void SetUnitId(this FamilyInstance instance)
         {
             //TODO
-            ParametersHelper.SetParameter(instance, ParametersConstants.ConveyorNumber, "1001" /*ParametersHelper.GetLastUnitId()*/);
-            //ParametersHelper.SetLastUnitId();
+            //ParametersHelper.SetParameter(instance, ParametersConstants.ConveyorNumber, "1001" /*ParametersHelper.GetLastUnitId()*/);
+            ParametersHelper.SetLastUnitId(instance);
         }
     }
 }
