@@ -171,6 +171,14 @@ namespace AdvansysPOC
                 //                    "dimension32.png"), UriKind.Absolute));
                 //buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(@"C:\Users\Jemmy\source\repos\AdvansysPOC\AdvansysPOC\Resources", "add32.png"), UriKind.Absolute));
                 Autodesk.Revit.UI.RibbonItem flipButton = panel.AddItem(buttonFlip);
+
+                PushButtonData buttonConvert = new PushButtonData("ConvertToDetail", "Convert To Detail", Assembly.GetExecutingAssembly().Location, "AdvansysPOC.ConvertToDetailCommand");
+                //                buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
+                //"dimension32.png"), UriKind.Absolute));
+                //                buttonDataDimensions.Image = new BitmapImage(new Uri(Path.Combine(UIConstants.ButtonIconsFolder,
+                //                    "dimension32.png"), UriKind.Absolute));
+                //buttonDataDimensions.LargeImage = new BitmapImage(new Uri(Path.Combine(@"C:\Users\Jemmy\source\repos\AdvansysPOC\AdvansysPOC\Resources", "add32.png"), UriKind.Absolute));
+                Autodesk.Revit.UI.RibbonItem convertButton = panel.AddItem(buttonConvert);
             }
             if (panelName == "Supports")
             {
