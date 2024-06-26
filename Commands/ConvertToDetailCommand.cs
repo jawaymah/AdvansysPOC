@@ -1,4 +1,5 @@
 ﻿using AdvansysPOC.Helpers;
+using AdvansysPOC.Logic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -37,9 +38,11 @@ namespace AdvansysPOC
 
             using (Transaction tr = new Transaction(Doc))
             {
-                tr.Start("Flip Conveyors Hand");
-
-
+                tr.Start("Converting to Detail");
+                foreach (var family in genericFamilies)
+                {
+                    var detailed = ConversionManager.ConvertToDetail(family);
+                }
 
 
                 tr.Commit();
